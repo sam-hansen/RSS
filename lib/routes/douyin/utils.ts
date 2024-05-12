@@ -2,7 +2,7 @@ import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
 import cache from '@/utils/cache';
-import * as path from 'node:path';
+import path from 'node:path';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import logger from '@/utils/logger';
@@ -131,10 +131,4 @@ const universalGet = async (url, route) => {
     return data;
 };
 
-module.exports = {
-    templates,
-    resolveUrl,
-    proxyVideo,
-    getOriginAvatar,
-    universalGet,
-};
+export { templates, resolveUrl, proxyVideo, getOriginAvatar, universalGet };

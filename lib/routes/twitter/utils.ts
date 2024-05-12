@@ -1,6 +1,6 @@
-const URL = require('url');
+import URL from 'url';
 import { config } from '@/config';
-const { TwitterApi } = require('twitter-api-v2');
+import { TwitterApi } from 'twitter-api-v2';
 import { fallback, queryToBoolean, queryToInteger } from '@/utils/readable-social';
 import { parseDate } from '@/utils/parse-date';
 
@@ -474,8 +474,15 @@ const parseRouteParams = (routeParams) => {
     return { count, exclude_replies, include_rts, force_web_api };
 };
 
-module.exports = {
-    ProcessFeed,
-    getAppClient,
-    parseRouteParams,
+export const excludeRetweet = function (tweets) {
+    const excluded = [];
+    for (const t of tweets) {
+        if (t.retweeted_status) {
+            continue;
+        }
+        excluded.push(t);
+    }
+    return excluded;
 };
+
+export default { ProcessFeed, getAppClient, parseRouteParams, excludeRetweet };

@@ -5,7 +5,7 @@ import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
-import * as path from 'node:path';
+import path from 'node:path';
 
 const rootUrl = 'https://nzmz.xyz';
 
@@ -160,9 +160,4 @@ const processItems = async (i, downLinkType, itemSelector, categorySelector, dow
         });
 };
 
-module.exports = {
-    rootUrl,
-    getItems,
-    getItemInfo,
-    processItems,
-};
+export { rootUrl, getItems, getItemInfo, processItems };

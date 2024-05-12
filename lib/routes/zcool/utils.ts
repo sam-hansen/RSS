@@ -2,7 +2,7 @@ import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
 import { art } from '@/utils/render';
-import * as path from 'node:path';
+import path from 'node:path';
 
 const extractArticle = (data) => data.props.pageProps.data.summary + data.props.pageProps.data.memo;
 
@@ -11,7 +11,4 @@ const extractWork = (data) =>
         data: data.props.pageProps.data,
     });
 
-module.exports = {
-    extractArticle,
-    extractWork,
-};
+export { extractArticle, extractWork };

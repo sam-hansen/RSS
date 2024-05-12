@@ -1,11 +1,37 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
-const md = require('markdown-it')({
+import MarkdownIt from 'markdown-it';
+const md = MarkdownIt({
     html: true,
 });
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/changelog',
+    categories: ['program-update'],
+    example: '/imagemagick/changelog',
+    parameters: {},
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: [
+        {
+            source: ['imagemagick.org/script/download.php', 'imagemagick.org/script', 'imagemagick.org/'],
+        },
+    ],
+    name: 'Changelog',
+    maintainers: ['nczitzk'],
+    handler,
+    url: 'imagemagick.org/script/download.php',
+};
+
+async function handler() {
     const rootUrl = 'https://imagemagick.org';
     const currentUrl = `${rootUrl}/script/download.php`;
     const logUrl = 'https://github.com/ImageMagick/Website/blob/main/ChangeLog.md';
@@ -38,9 +64,9 @@ export default async (ctx) => {
             };
         });
 
-    ctx.set('data', {
+    return {
         title: 'ImageMagick - ChangeLog',
         link: currentUrl,
         item: items,
-    });
-};
+    };
+}

@@ -5,7 +5,7 @@ function parseJSONP(jsonpData) {
         let jsonString = jsonpData.substring(startPos + 1, endPos + 1);
 
         // remove escaped single quotes since they are not valid json
-        jsonString = jsonString.replaceAll("\\'", "'");
+        jsonString = jsonString.replaceAll(String.raw`\'`, "'");
 
         return JSON.parse(jsonString);
     } catch (error_) {
@@ -14,6 +14,4 @@ function parseJSONP(jsonpData) {
     }
 }
 
-module.exports = {
-    parseJSONP,
-};
+export { parseJSONP };

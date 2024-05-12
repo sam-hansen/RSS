@@ -6,7 +6,7 @@ import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import { config } from '@/config';
 import { art } from '@/utils/render';
-import * as path from 'node:path';
+import path from 'node:path';
 
 const apiUrl = 'https://api.followin.io';
 const baseUrl = 'https://followin.io';
@@ -73,13 +73,4 @@ const parseItem = (item, tryGet) =>
         return item;
     });
 
-module.exports = {
-    apiUrl,
-    baseUrl,
-    favicon,
-    getBParam,
-    getBuildId,
-    getGToken,
-    parseList,
-    parseItem,
-};
+export { apiUrl, baseUrl, favicon, getBParam, getBuildId, getGToken, parseList, parseItem };

@@ -1,7 +1,7 @@
 import got from '@/utils/got';
 import { config } from '@/config';
 
-module.exports = (tryGet) => {
+const getData = (tryGet) => {
     const bgmCalendarUrl = 'https://api.bgm.tv/calendar';
     const bgmDataUrl = 'https://cdn.jsdelivr.net/npm/bangumi-data/dist/data.json';
 
@@ -35,3 +35,4 @@ module.exports = (tryGet) => {
         )
     );
 };
+export default getData;

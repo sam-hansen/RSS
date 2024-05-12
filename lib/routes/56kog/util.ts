@@ -3,11 +3,11 @@ const __dirname = getCurrentPath(import.meta.url);
 
 import got from '@/utils/got';
 import { load } from 'cheerio';
-const iconv = require('iconv-lite');
+import iconv from 'iconv-lite';
 import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
-import * as path from 'node:path';
+import path from 'node:path';
 
 const rootUrl = 'https://www.56kog.com';
 
@@ -108,7 +108,4 @@ const fetchItems = async (limit, currentUrl, tryGet) => {
     };
 };
 
-module.exports = {
-    rootUrl,
-    fetchItems,
-};
+export { rootUrl, fetchItems };

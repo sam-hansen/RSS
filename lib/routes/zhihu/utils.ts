@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 
-module.exports = {
+export default {
     header: {
         'x-api-version': '3.0.91',
     },
@@ -15,8 +15,12 @@ module.exports = {
             const href = $(elem).attr('href');
             if (href?.startsWith('https://link.zhihu.com/?target=')) {
                 const url = new URL(href);
-                const target = url.searchParams.get('target');
-                $(elem).attr('href', decodeURIComponent(target));
+                const target = url.searchParams.get('target') || '';
+                try {
+                    $(elem).attr('href', decodeURIComponent(target));
+                } catch {
+                    // sometimes the target is not a valid url
+                }
             }
         });
 

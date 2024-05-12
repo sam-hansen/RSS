@@ -4,7 +4,7 @@ const __dirname = getCurrentPath(import.meta.url);
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
-import * as path from 'node:path';
+import path from 'node:path';
 
 const domain = 'otobanana.com';
 const apiBase = `https://api.${domain}`;
@@ -60,11 +60,4 @@ const renderPost = ({ id, type_label: type, cast, /** livestream  */ message /**
     }
 };
 
-module.exports = {
-    apiBase,
-    baseUrl,
-    getUserInfo,
-    renderCast,
-    renderLive,
-    renderPost,
-};
+export { apiBase, baseUrl, getUserInfo, renderCast, renderLive, renderPost };

@@ -3,7 +3,7 @@ import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
-module.exports = async (ctx, currentUrl) => {
+const fetchFeed = async (ctx, currentUrl) => {
     const rootUrl = 'https://www.ruancan.com';
     currentUrl = `${rootUrl}${currentUrl}`;
 
@@ -65,3 +65,4 @@ module.exports = async (ctx, currentUrl) => {
         item: items,
     };
 };
+export default fetchFeed;

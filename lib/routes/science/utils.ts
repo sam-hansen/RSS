@@ -3,7 +3,7 @@ const __dirname = getCurrentPath(import.meta.url);
 
 import { load } from 'cheerio';
 import { art } from '@/utils/render';
-import * as path from 'node:path';
+import path from 'node:path';
 import { parseDate } from '@/utils/parse-date';
 
 const baseUrl = 'https://www.science.org';
@@ -60,8 +60,4 @@ const getItem = (item, $) => {
     };
 };
 
-module.exports = {
-    baseUrl,
-    fetchDesc,
-    getItem,
-};
+export { baseUrl, fetchDesc, getItem };

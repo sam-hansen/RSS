@@ -1,8 +1,8 @@
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
-const { getLocalName } = require('./utils');
+import { getLocalName } from './utils';
 
-module.exports = (type) => {
+const getFromAPI = (type) => {
     const mapping = {
         blog: {
             en: 'reviews',
@@ -31,3 +31,4 @@ module.exports = (type) => {
         };
     };
 };
+export default getFromAPI;

@@ -6,7 +6,7 @@ import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 import { art } from '@/utils/render';
-import * as path from 'node:path';
+import path from 'node:path';
 
 const getRollNewsList = (pageid, lid, limit) =>
     got('https://feed.mix.sina.com.cn/api/roll/get', {
@@ -100,8 +100,4 @@ const parseArticle = (item, tryGet) =>
         return item;
     });
 
-module.exports = {
-    getRollNewsList,
-    parseRollNewsList,
-    parseArticle,
-};
+export { getRollNewsList, parseRollNewsList, parseArticle };

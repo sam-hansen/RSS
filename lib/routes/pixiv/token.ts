@@ -1,7 +1,7 @@
 import { config } from '@/config';
 import logger from '@/utils/logger';
-const got = require('./pixiv-got');
-const { maskHeader } = require('./constants');
+import got from './pixiv-got';
+import { maskHeader } from './constants';
 
 let token = null;
 
@@ -15,34 +15,27 @@ const refreshToken = (tryGet) =>
     tryGet(
         'pixiv:accessToken',
         () =>
-            got
-                .post('https://oauth.secure.pixiv.net/auth/token', {
-                    form: {
-                        ...authorizationInfo,
-                        get_secure_url: 1,
-                        grant_type: 'refresh_token',
-                        refresh_token: config.pixiv.refreshToken,
-                    },
-                    headers: {
-                        ...maskHeader,
-                    },
-                    responseType: 'json',
-                    resolveBodyOnly: true,
-                })
-                .catch((error) => {
-                    logger.error('Pixiv refresh token failed.');
-                    logger.error(error);
-                }),
+            got.post('https://oauth.secure.pixiv.net/auth/token', {
+                form: {
+                    ...authorizationInfo,
+                    get_secure_url: 1,
+                    grant_type: 'refresh_token',
+                    refresh_token: config.pixiv.refreshToken,
+                },
+                headers: {
+                    ...maskHeader,
+                },
+            }),
         3600,
         false
     );
 
 async function getToken(tryGet) {
-    const result = await refreshToken(tryGet);
+    const { data } = await refreshToken(tryGet);
     // let expireTime;
-    if (result && result.access_token) {
+    if (data && data.access_token) {
         logger.debug('Pixiv refresh token success.');
-        token = result.access_token;
+        token = data.access_token;
         // expireTime = result.expires_in;
     }
     // } else {
@@ -56,9 +49,7 @@ async function getToken(tryGet) {
     return token;
 }
 
-module.exports = {
-    getToken,
-};
+export { getToken };
 
 // let tickTokenStarted = false;
 
@@ -78,7 +69,7 @@ module.exports = {
 //     return token;
 // }
 
-// module.exports = async (tryGet) => {
+// export default async (tryGet) => {
 //     await startTickToken(tryGet);
 //     return waitForToken();
 // };

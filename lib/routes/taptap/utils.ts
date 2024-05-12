@@ -3,7 +3,7 @@ const __dirname = getCurrentPath(import.meta.url);
 
 import got from '@/utils/got';
 import { load } from 'cheerio';
-import * as path from 'node:path';
+import path from 'node:path';
 import { art } from '@/utils/render';
 
 // Please do not change %26 to &
@@ -47,11 +47,4 @@ const videoPost = (video) =>
         previewUrl: video?.video_resource.preview_animation.original_url,
     });
 
-module.exports = {
-    getRootUrl,
-    X_UA,
-    appDetail,
-    imagePost,
-    topicPost,
-    videoPost,
-};
+export { getRootUrl, X_UA, appDetail, imagePost, topicPost, videoPost };

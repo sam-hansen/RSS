@@ -1,10 +1,13 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import parser from '@/utils/rss-parser';
 import { load } from 'cheerio';
 import got from '@/utils/got';
-const dayjs = require('dayjs');
-dayjs.extend(require('dayjs/plugin/utc'));
-dayjs.extend(require('dayjs/plugin/timezone'));
+import dayjs from 'dayjs';
+import utc from 'dayjs/plugin/utc';
+import timezone from 'dayjs/plugin/timezone';
+dayjs.extend(utc);
+dayjs.extend(timezone);
 
 const redirectCacheKey = 'phoronix:redirect';
 const webArticlesCacheKey = 'phoronix:web-articles';
@@ -69,7 +72,7 @@ const webFetch = (url) =>
         try {
             return webFetchCb(await got(url));
         } catch (error) {
-            if (error.name === 'HTTPError' && error.response.statusCode === 404) {
+            if ((error.name === 'HTTPError' || error.name === 'FetchError') && error.response.statusCode === 404) {
                 return '404';
             }
             throw error;
@@ -109,7 +112,33 @@ const tryFetch = async (category, topic) => {
     return feed;
 };
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/:category?/:topic?',
+    categories: ['new-media'],
+    example: '/phoronix/linux/KDE',
+    parameters: {
+        category: 'Category',
+        topic: 'Topic. You may find available parameters from their navigator links. E.g. to subscribe to `https://www.phoronix.com/reviews/Operating+Systems`, fill in the path `/phoronix/reviews/Operating+Systems`',
+    },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: [
+        {
+            source: ['phoronix.com/:category?/:topic?'],
+        },
+    ],
+    name: 'News & Reviews',
+    maintainers: ['oppliate', 'Rongronggg9'],
+    handler,
+};
+
+async function handler(ctx) {
     const { category, topic } = ctx.req.param();
     let feed;
     switch (category) {
@@ -231,5 +260,5 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', feed);
-};
+    return feed;
+}

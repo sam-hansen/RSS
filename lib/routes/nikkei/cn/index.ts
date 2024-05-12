@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getSubPath } from '@/utils/common-utils';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
@@ -6,13 +7,20 @@ import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
 import parser from '@/utils/rss-parser';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/cn/*',
+    name: 'Unknown',
+    maintainers: [],
+    handler,
+};
+
+async function handler(ctx) {
     let language = '';
     let path = getSubPath(ctx);
 
     if (/^\/cn\/(cn|zh)/.test(path)) {
         language = path.match(/^\/cn\/(cn|zh)/)[1];
-        path = path.match(new RegExp('\\/cn\\/' + language + '(.*)'))[1];
+        path = path.match(new RegExp(String.raw`\/cn\/` + language + '(.*)'))[1];
     } else {
         language = 'cn';
     }
@@ -84,10 +92,10 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: isOfficialRSS ? officialFeed.title : $('title').first().text(),
         description: isOfficialRSS ? officialFeed.description : '',
         link: currentUrl,
         item: items,
-    });
-};
+    };
+}

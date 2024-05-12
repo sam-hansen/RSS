@@ -6,7 +6,7 @@ import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import got from '@/utils/got';
 import { art } from '@/utils/render';
-import * as path from 'node:path';
+import path from 'node:path';
 
 const defaultRssItem = (item) => ({
     title: item.name,
@@ -20,7 +20,7 @@ const defaultRssItem = (item) => ({
     },
 });
 
-module.exports = {
+export default {
     ProcessItem: (item, ctx) => {
         const useOldMode = ctx.req.query('old') === 'yes';
         if (item.link) {

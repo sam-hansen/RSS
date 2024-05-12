@@ -4,7 +4,7 @@ const __dirname = getCurrentPath(import.meta.url);
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { art } from '@/utils/render';
-import * as path from 'node:path';
+import path from 'node:path';
 
 const parseArticle = (item, tryGet) =>
     /\.blog\.caixin\.com$/.test(new URL(item.link).hostname)
@@ -46,7 +46,4 @@ const parseBlogArticle = (item, tryGet) =>
         return item;
     });
 
-module.exports = {
-    parseArticle,
-    parseBlogArticle,
-};
+export { parseArticle, parseBlogArticle };
